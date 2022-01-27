@@ -1,27 +1,43 @@
+declare const window: any;
+
 const synth = typeof window !== 'undefined' && window.speechSynthesis;
-let voices = [];
+let voices: any = [];
 
 export const testRun = () => {
-    let utterance = new SpeechSynthesisUtterance("Browser-based text-to-speech app because reading is for nerds.");
-    speechSynthesis.speak(utterance);
-}
+  let utterance = new SpeechSynthesisUtterance(
+    'Browser-based text-to-speech app because reading is for nerds.'
+  );
+  speechSynthesis.speak(utterance);
+};
 
 export const populateVoiceList = () => {
+  try {
     voices = synth.getVoices();
+    return voices;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-    voices.forEach(voice => {
+export const sayInput = (
+  speechValue: string,
+  inputVoice: any,
+  pitch: number,
+  rate: number
+) => {
+  const utterance = new SpeechSynthesisUtterance(speechValue);
+  populateVoiceList();
 
-    })
-}
+  voices.forEach((voice: any) => {
+    console.log(voice.name, inputVoice);
+    if (voice.name === inputVoice) {
+      utterance.voice = voice;
+      return;
+    }
+  });
 
-export const sayInput = (speechValue: string) => {
-    const utterance = new SpeechSynthesisUtterance(speechValue);
-    //const selectedVoice = voiceSelect.selectedOptions[0].getAttribute('data-name');
+  utterance.pitch = pitch;
+  utterance.rate = rate;
 
-    //voices.forEach(voice => voice.name === selectedVoice ? utterance.voice = voice : 'not');
-
-    utterance.pitch = 1.3;
-    utterance.rate = 1.1;
-
-    synth.speak(utterance);
-}
+  synth.speak(utterance);
+};
