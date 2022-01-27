@@ -2,13 +2,6 @@ declare const window: any;
 
 const synth = typeof window !== 'undefined' && window.speechSynthesis;
 
-export const testRun = () => {
-  let utterance = new SpeechSynthesisUtterance(
-    'Browser-based text-to-speech app because reading is for nerds.'
-  );
-  speechSynthesis.speak(utterance);
-};
-
 export const populateVoiceList = () => {
   try {
     let voices = synth.getVoices();
@@ -36,5 +29,6 @@ export const sayInput = (
   utterance.pitch = pitch;
   utterance.rate = rate;
 
+  window.speechSynthesis.cancel();
   synth.speak(utterance);
 };

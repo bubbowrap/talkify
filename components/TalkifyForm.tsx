@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { sayInput, populateVoiceList, testRun } from 'api';
-import { ChangeEvent } from 'react';
+import { sayInput, populateVoiceList } from 'api';
 import {
   Box,
   ButtonGroup,
@@ -25,9 +24,9 @@ interface voiceProps {
 const TalkifyForm = () => {
   const [textInput, setTextInput] = useState('');
   const [voiceList, setVoiceList] = useState<any>([]);
-  const [voiceOptions, setVoiceOptions] = useState();
+  const [voiceOptions, setVoiceOptions] = useState([]);
   const [voice, setVoice] = useState('Alex');
-  const [pitch, setPitch] = useState(1);
+  const [pitch, setPitch] = useState<number>(1);
   const [rate, setRate] = useState<number>(1);
 
   useEffect(() => {
@@ -47,48 +46,50 @@ const TalkifyForm = () => {
   useEffect(() => {
     setVoiceOptions(
       voiceList.length ? (
-        voiceList?.map(({ voiceURI, name, lang }: voiceProps, i: number) => (
-          <MenuItem value={voiceURI} key={i}>
+        voiceList?.map(({ name, lang }: voiceProps, i: number) => (
+          <MenuItem value={name} key={i}>
             {name} - {lang}
           </MenuItem>
         ))
       ) : (
-        <MenuItem key='empty' value={''}></MenuItem>
+        <MenuItem value='Alex'>Alex - en-US</MenuItem>
       )
     );
   }, [voiceList]);
 
   useEffect(() => {
     setVoice((prevVoice: any) =>
-      voiceList
-        ? voiceList?.filter((voiceItem: any) => voiceItem.default)
+      voiceList.length > 0
+        ? voiceList?.filter((voice: any) => voice.default)[0].name
         : prevVoice
     );
   }, [voiceList]);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    window.speechSynthesis.cancel();
     textInput.length && sayInput(textInput, voice, pitch, rate);
   };
 
   return (
     <Box textAlign='center'>
       <form autoComplete='off' onSubmit={handleSubmit}>
-        <FormControl sx={{ minWidth: '25%', m: '0.5rem 0.5rem 1.5rem' }}>
+        <FormControl
+          sx={{ width: '25%', minWidth: '150px', m: '0.5rem 0.5rem 1.5rem' }}
+        >
           <InputLabel htmlFor='voices-id'>Voices</InputLabel>
           <Select
             labelId='voices-id'
             label='Voices'
             id=''
             value={voice}
-            autoWidth
             onChange={(e) => setVoice(e.target.value)}
           >
             {voiceOptions}
           </Select>
         </FormControl>
-        <FormControl sx={{ width: '10%', m: '0.5rem 0.5rem 1.5rem' }}>
+        <FormControl
+          sx={{ width: '10%', m: '0.5rem 0.5rem 1.5rem', minWidth: '75px' }}
+        >
           <InputLabel>Rate</InputLabel>
           <Select
             label='Rate'
@@ -102,7 +103,9 @@ const TalkifyForm = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl sx={{ width: '10%', m: '0.5rem 0.5rem 1.5rem' }}>
+        <FormControl
+          sx={{ width: '10%', m: '0.5rem 0.5rem 1.5rem', minWidth: '75px' }}
+        >
           <InputLabel>Pitch</InputLabel>
           <Select
             label='Pitch'
