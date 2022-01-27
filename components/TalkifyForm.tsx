@@ -68,7 +68,8 @@ const TalkifyForm = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    textInput.length && testRun();
+    window.speechSynthesis.cancel();
+    textInput.length && sayInput(textInput, voice, pitch, rate);
   };
 
   return (
@@ -143,6 +144,7 @@ const TalkifyForm = () => {
             color='secondary'
             size='large'
             disableElevation
+            onClick={() => window.speechSynthesis.pause()}
           >
             Pause
           </Button>
@@ -151,6 +153,7 @@ const TalkifyForm = () => {
             color='success'
             size='large'
             disableElevation
+            onClick={() => window.speechSynthesis.resume()}
           >
             Resume
           </Button>
@@ -159,6 +162,7 @@ const TalkifyForm = () => {
             color='error'
             size='large'
             disableElevation
+            onClick={() => window.speechSynthesis.cancel()}
           >
             Stop
           </Button>
