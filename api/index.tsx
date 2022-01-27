@@ -1,7 +1,6 @@
 declare const window: any;
 
 const synth = typeof window !== 'undefined' && window.speechSynthesis;
-let voices: any = [];
 
 export const testRun = () => {
   let utterance = new SpeechSynthesisUtterance(
@@ -12,8 +11,8 @@ export const testRun = () => {
 
 export const populateVoiceList = () => {
   try {
-    voices = synth.getVoices();
-    return voices;
+    let voices = synth.getVoices();
+    return voices.sort((a: any, b: any) => a.name.localeCompare(b.name));
   } catch (err) {
     console.log(err);
   }
@@ -26,10 +25,8 @@ export const sayInput = (
   rate: number
 ) => {
   const utterance = new SpeechSynthesisUtterance(speechValue);
-  populateVoiceList();
 
-  voices.forEach((voice: any) => {
-    console.log(voice.name, inputVoice);
+  populateVoiceList().forEach((voice: any) => {
     if (voice.name === inputVoice) {
       utterance.voice = voice;
       return;

@@ -17,8 +17,8 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <Container component='main' maxWidth='md'>
-        <Typography component='h1' variant='h1' align='center'>
+      <Container component='main' maxWidth='md' sx={{ mt: 4, mb: 8 }}>
+        <Typography component='h1' variant='h1' align='center' color='primary'>
           Talkify
         </Typography>
         <Typography

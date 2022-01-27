@@ -6,12 +6,14 @@ interface FooterProps {
 
 const useStyles = makeStyles({
   footer: {
-    position: 'fixed',
+    borderTop: 'thin solid rgba(0,0,0,.05)',
     padding: '1rem',
     bottom: 0,
     width: '100%',
     textAlign: 'center',
     background: 'white',
+    margin: '0 auto',
+    maxWidth: '800px',
   },
 });
 
