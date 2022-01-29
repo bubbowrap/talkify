@@ -1,4 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#Talkify
+
+Text to speech app using the Web Speech API. Mainly wanted to try some things out (specifically seeing how MaterialUI plays with Next.js), and also since I'm currently editing my book it's really helpful to hear it read out loud to me so I can fix grammar/spelling/tone/readibility/etc. I'll be adding stuff as I go; I'm largely considering this a testing ground for tools and concepts I want to use in other, bigger projects so if you're wondering 'why are you using something so excessive for something so simple' well....there you go. Check it out if you're interested:
+
+[Talkify](https://talkify.netlify.app)
+
+Tools so far:
+
+- Next.js
+- MUI (Material UI)
+- Web Speech API
+
+Bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
